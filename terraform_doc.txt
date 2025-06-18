@@ -1,0 +1,70 @@
+if multiple user then we need backend
+create manually s3>
+
+this code need to added in provider
+terraform {
+  backend "s3" {
+    bucket = "terraformstatefilejb"
+    key = "env/dev/terraform.tfstate"
+    region = "us-west-1"
+  }
+}
+
+
+C:\Users\admin\Desktop\kokila\terraForm>aws sts get-caller-identity
+{
+    "UserId": "AIDAYS2NWIPIXSTMKL3DI",
+    "Account": "590184072145",
+    "Arn": "arn:aws:iam::590184072145:user/kokila.gowda@socgen.com"
+}
+
+
+
+terraform is used to create the resources
+also suppots te cong of resources but it has limitation.
+
+ansible is used to configure those resources
+but this can also be used to create resources but in that it has the limitation
+
+ansible/puppet/chef
+
+ensible tool push the code to all automatically.
+
+master machine: setup of ansible
+child machine: only python is need for ensible
+
+created 2 machine, login and consider master
+commands: to run in master
+sudo apt update
+sudo apt install -y software-properties-common
+sudo add-apt-repository --yes --update ppa:ansible/ansible
+sudo apt install -y ansible
+once done ansible --version
+
+ansible --versioncd 
+
+create 2 new instance using ubuntu 
+in connection if issue for network:
+-------
+go to instanc>action>network>manage ip address>
+select allocate>allocate elastic ip address>allocate>
+link the instance(each instanc has it own elastic ip, ) to the network>check the allocate> allocate
+----------
+in master --> kokila_a1
+run above commands
+once done> cd /etc/ansible
+>ls> sudo vim hosts
+suggested to do this in putty
+open putty> give host as ip of the master machine>
+expand>ssh>auth>credentials>attach the instance key(that we created while creating the instance)
+putty: username: ubuntu> enter
+then in terminal>  cd /etc/ansible
+>ls> sudo vim hosts>
+check for webservers uncomment it>
+add the child instance ip >press esc, :wq
+then the target host will be linked to master
+
+
+in child --->kokila_ac1
+
+ 

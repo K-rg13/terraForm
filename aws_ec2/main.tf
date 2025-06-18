@@ -5,4 +5,7 @@ resource "aws_instance" "abc1" {
     instance_type = var.instancetype  // size of instance "t2.micro"
     subnet_id = var.subnetid //subnet id for newtwor issue data.aws_subnet.selected.id
     associate_public_ip_address = true
+    tags = {
+    Name = "ec2-instance-${var.instance_index}"  # 👈 Use the index
+  }
 }

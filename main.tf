@@ -4,18 +4,25 @@ data "aws_subnet" "selected" {
 
 module "aws_ec2" {
   source = "./aws_ec2"
-#   providers = {
-#     alias = "aws-us-west1"
-#   }
+  count = 2
   ami= "ami-014e30c8a36252ae5" // we can pass this using variables
   instancetype = "t2.micro"
   subnetid = data.aws_subnet.selected.id
+  instance_index = count.index  # 🔥 Pass the index here to create multiple instance with single call
 }
 
-module "aws_s3-bucket" {
-  source = "./aws_s3-buket"
-  bucketname = var.bucketname1[0]
-}
+module "aws_ecr" {
+  source = "./aws_ecr"
+#   providers = {
+#     alias = "aws-us-west1"
+#   }
+  ecr_name= "my-app-repo" // we can pass this using variables
+ }
+
+# module "aws_s3-bucket" {
+#   source = "./aws_s3-buket"
+#   bucketname = var.bucketname1[0]
+# }
 
 
 

@@ -9,3 +9,7 @@ variable "instancetype" {
 variable "subnetid" {
     type = string
 }
+
+variable "instance_index" {
+    type = number
+}
