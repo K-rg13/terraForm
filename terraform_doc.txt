@@ -41,7 +41,7 @@ sudo add-apt-repository --yes --update ppa:ansible/ansible
 sudo apt install -y ansible
 once done ansible --version
 
-ansible --versioncd 
+ansible --version
 
 create 2 new instance using ubuntu 
 in connection if issue for network:
@@ -50,21 +50,58 @@ go to instanc>action>network>manage ip address>
 select allocate>allocate elastic ip address>allocate>
 link the instance(each instanc has it own elastic ip, ) to the network>check the allocate> allocate
 ----------
-in master --> kokila_a1
+in master --> kokila_m
 run above commands
 once done> cd /etc/ansible
 >ls> sudo vim hosts
 suggested to do this in putty
 open putty> give host as ip of the master machine>
 expand>ssh>auth>credentials>attach the instance key(that we created while creating the instance)
-putty: username: ubuntu> enter
+putty: username: ubuntu
+> enter
 then in terminal>  cd /etc/ansible
 >ls> sudo vim hosts>
-check for webservers uncomment it>
+check for webservers(ensible target groupname, i want to run this group) uncomment it>
 add the child instance ip >press esc, :wq
 then the target host will be linked to master
 
 
-in child --->kokila_ac1
+in child --->kokila_c
 
- 
+
+authenticate 2 vm master and child ansible:
+----------------------------------------
+open master: 
+ssh-copy-id user@remote-server-ip ===> if this is not working then follow below steps:
+
+ssh-keygen -t rsa -b 4096 -C "your_email@example.com" ==> key generation
+cd /home/ubuntu/.ssh
+ls
+cat id_rsa.pub
+copy code:
+ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCbVgHmTM37UQGYPRuQQp3R6grZSW6qhhQ88OjcP+LcpFlKsj3AMZdizY5rlXB4uQYEQpMxqLpbq0UTn0hsd6mww5NroQOgi1R8aTD0DW9YNXGI3A/qH6QkCh/sFVtD1rBK04kU9OVztPum2ywMxYbiWtWGj581dBwgImiJLjWEIX76z2BDBgH51p75hI5AG1yhyK/JVemfnRJ1dgu7zbJXlV6YIOvnHbFisTowzApgYtV39CqC1tbmanFF2+HMO1jV8aGWW/LenepGpWfSbw5KEBgo6cQViXj4lsA8O2oZzyGda1q9hSQ7qCKGQaMyfaOlb7BhTxVHudeaD545/zHoHIx9xja3ChJPjTjN7k85avuWudyF4JMlp7KcYchnKiWSJzHHAfvZyju+Y0XwlOV6upOMrXvlOfAc1jZxPRb9beBFLom/s5D01cQvHSoPvi7h6DScgAa61TQdK4UMiN7dScOhrUcd++mJq1F+3UTBxu2n8JFcRmA/8Xi4waD5SyqrlnivuqZaPyrbazFpTbstSHdSA9YNyRH69tEy5WksJS1Ovb2iMAta0Wk5wBb+Ecth2nxoj4Bb6jOMegfMJPMvNcg7yuthP/Ju5beauxI06kfbfyRVoBE+hCzwDxHBpLM/ZHygc74+Vf+h57aUERtX0YFmZ5HDtLOe+WJS0iM0bw== kokila.gowda@socgen.com
+
+in child:
+cd /home/ubuntu/.ssh
+ls
+sudo vim authorized_keys
+add the code above and :wq
+
+go back to master:
+go cd/etc/ansible
+ansible all -m ping
+it should be success
+
+why this authenticate, suppose if we want to communicate
+with 2 machine we need the access for that we setup this.
+
+
+in putty:
+cd /etc/ansible
+ls> 
+cat commands to open the file
+
+conCEPT OF ANSIBLE AND KUBERNET IN ANSIBL.TXT
+
+
+

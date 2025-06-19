@@ -1,0 +1,23 @@
+ansible questions:
+Here’s a list of all the questions you asked in this chat:
+
+1. **How to authenticate 2 VMs in Terraform?**
+2. **How to authenticate 2 VMs in AWS connect terminal?**
+3. **Tell me only manual one**
+4. **Command: `mkdir /home/kokilag && touch kokila.txt` — is this correct in YAML?**
+5. **I want to install the Nginx machine on target machine using playbook**
+6. **Create an Ansible playbook to install the Nginx services on the target machine**
+7. **For one target machine that already has authentication**
+8. **Simple one**
+9. **`.yml` or `.yaml`?**
+10. **I just want to install and check in target it's there or not**
+11. **After install I need to start on — once I access the IP it should print "Hello World"**
+12. **Copy the file from master to target machine — I need simple code**
+13. **First I need to create a file in master machine and then copy it**
+14. **Suppose I am working in project — where and all we can use this Ansible file?**
+15. **Assessment: Explore more about Ansible and how to put conditions in it — in simple one**
+16. **Types of conditions**
+17. **Just list the types of conditions**
+18. **List the questions which I asked you in this chat**
+
+Let me know if you want these formatted for a report or assignment!

@@ -1,0 +1,207 @@
+concept of ansible and kubernate concept:
+from master we need to push the file to multiple machine
+for that we need ansible playbooks written in yaml.
+in this book also we have sections:
+1. play: what task we need to play
+    a. tasks:
+        1.module 2.notify 3.handlers
+
+        in putty on same directoty will create new file
+        command: sudo vim ansible-playbook.yaml
+        new playbook open; it always start with ---(this is the way to identify the playbook)
+        hosts: webservers //on which target we are running 
+        become: yes //every command should run with sudo
+        name: play1
+        tasks:
+           - name: execute command
+             //command: mkdir /home/kokilag && touch kokila.txt
+             shell: |
+                      cd /home/gowda
+                      touch kokila.txt
+             esc :wq
+
+run ensible command:
+1. ansible-playbook ansible-playbook.yaml --syntax-check 
+if output is playbook:something then its good
+1. ansible-playbook ansible-playbook.yaml
+
+then go to target(child) machine > cd /home>ls>
+cd directoty>ls --> i should see the file
+
+above example code:
+- hosts: webservers //target machine
+  become: yes
+  name: kp1
+  tasks:
+      - name: execute command
+        shell: |
+                mkdir /home/gowda
+                cd /home/gowda
+                touch kokila1.txt
+
+assesment 1:
+create a ansible playbook to install the ngnix services on the target machine
+
+---
+- name: Install and verify Nginx
+  hosts: target
+  become: true
+  tasks:
+    - name: Install Nginx
+      apt:
+        name: nginx
+        state: present
+        update_cache: yes
+
+    - name: Check if Nginx is installed
+      command: nginx -v
+      register: nginx_check
+      ignore_errors: true
+
+    - name: Show Nginx version
+      debug:
+        var: nginx_check.stderr
+
+simple one> after run > check for the version in target>
+nginx -v
+
+sec 1:
+to print hello world
+code:
+---
+- name: Install Nginx and display "Hello World"
+  hosts: target
+  become: true
+  tasks:
+    - name: Install Nginx
+      apt:
+        name: nginx
+        state: present
+        update_cache: yes
+
+    - name: Start and enable Nginx
+      service:
+        name: nginx
+        state: started
+        enabled: true
+
+    - name: Create custom index.html
+      copy:
+        content: "<h1>Hello World</h1>"
+        dest: /var/www/html/index.html
+        owner: www-data
+        group: www-data
+        mode: '0644'
+
+
+once execute: in security group of target add 80 custom prop
+then access like http://ip:80
+
+to check the status of ngnix
+sudo systemctl status nginx
+
+assesment 3: copy the file from master to taget machine
+create the file in master : sudo touch hello.txt
+code for copy: sudo vim copyhello.yaml
+---
+- name: Copy local file to target machine
+  hosts: target  //will be webservers in our case
+  become: true
+  tasks:
+    - name: Copy hello.txt to target
+      copy:
+        src: hello.txt          # local file path (relative to playbook)
+        dest: /home/hello.txt
+        owner: ubuntu
+        group: ubuntu
+        mode: '0644'
+
+    go to target check there file is present or not.
+
+where and all we can use this ansible yamal files in project:
+
+ Typical Ansible Folder Structure in a Project
+bash
+Copy
+Edit
+ansible/
+├── playbooks/
+│   ├── install_nginx.yml
+│   ├── deploy_app.yml
+│   └── setup_users.yml
+├── inventory/
+│   └── hosts.ini
+├── roles/
+│   └── nginx/
+│       └── tasks/
+│           └── main.yml
+└── group_vars/
+    └── all.yml
+
+Summary: Where You Use Ansible Playbooks in a Project
+Area	Use Case Example
+🖥️ Server Setup	Install & configure OS and services
+🚀 Deployment	Push app updates to servers
+🔐 Security	Apply system hardening rules
+🔁 Config Management	Ensure consistent system settings
+⚙️ CI/CD	Deploy automatically via pipelines
+📂 File Copy	Move scripts/configs between machines
+📊 Monitoring Setup	Configure tools like Grafana/Prometheus
+
+
+by jathin:
+create module called nginx
+creat another module to install apache
+----- java
+and soon
+so inside the playbook > from play ill call the each required modules
+this is the concept of module in ansible we call in roles
+
+
+in master: cd /etc/ansible
+create role: sudo ansible-galaxy init apache(role name) --offline
+ls
+then we should see the apache folder.
+sudo apt install tree //(used to show the folder Structure)
+then tree apache 
+it will display then Structure
+each role has its default , if we didnt give anything it will take default one
+2. files //handle the file copy paste and all
+3. handler // task1: send a msg to taks2 that i have completed my work now u can work
+handler: abc //in this we define what and how need to be executed
+
+how to create,edit:
+
+inside /etc/ansible/apache/ls
+roles: called sudo vim main.yml
+---
+  - include_tasks: install.yml //install
+  - include_tasks: configure.yml //copy file
+  - include_tasks: service.yml //run
+
+  inside /etc/ansible/apache/tasks
+  create above 3 yml files in this location
+  we need to write the steps needed for each file.
+
+call this apache,
+go to /etc/ansible
+ls
+sudo vim apache-install.yml
+in this file we need to call the roles:
+---
+  - hosts: webservers
+    become: yes
+    roles:
+      - apache
+      :wq
+
+run ansible-playbook apache-install.yml.
+
+
+we can create a multiple roles also:
+to do that 
+1: in hosts: //we can give multiple webservers
+2: in ansible also we can put conditions like how we want and we can execute
+these are the simple example but we can do complex also
+
+assesment explore more anout the ansible and how to put conditions in it

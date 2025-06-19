@@ -1,0 +1,306 @@
+docker tool: container it self a os.
+its a famouse and populer tool.
+which helps u to create images
+images: is a file which will have os, dependencies, config and several other thing
+in compressed manner.
+
+ex: laptop
+1. laptop- os, config
+need to set in laptop 2, 
+to do that , we are going to create a image of lap1 and 
+will clone that image into lap2
+
+advantages:
+
+
+what it do?
+on the server, it will create other layer in os even the image is
+created by linux, its a platform independent
+image will be lesser size it wont have everything 
+
+steps:
+create docker account in : https://hub.docker.com/ (its a free of cost).
+kokilargowda699@gmail.com
+kokilarg123
+<pass@13>
+link: https://hub.docker.com/repositories/kokilarg123
+
+docker method
+on docker hub website
+ubuntu image
+login to thst image and then install the nginx
+
+open docker Desktop app> below it should be in running state.
+
+nginx image.
+cmd prompt
+docker pull nginx
+tag: latest
+to run: docker run -it -d -p 80:80 nginx
+
+to check the continer is running ot not run:
+docker ps 
+
+docker ps -a // it shows runing and stopped both
+
+docker exec -it <container id> bash 
+ls
+
+cd /usr/share/
+ls
+cd nginx
+ls
+cd html 
+ls
+check vim isther if not install vim
+apt update && apt install vim -y
+vim index.html
+
+:wq
+type: Exit
+docker commit 
+
+// then checkin browser localhost:80
+
+docker ps
+docker commit and <containerid> <imagename>
+it will create a image under he name u provided.
+
+to confirm:
+docker images
+in list we should see the new image name
+
+
+to push the images to docher hub
+to do that we need to rename the image 
+docker tag <old image new name> <prefixtheusernameex:kokilarg123/newname>
+then
+docker push <imagename>
+
+goto docker hub, we should see the image.
+
+
+example based on above steps: 
+docker pull jatinbhalla1991/jatinnginx
+issue in above command: try login in cmd
+1. docker login or 
+2. docker login -u kokilarg123
+docker images
+docker run -it -d -p 80:80 jatinbhalla1991/jatinnginx
+localhost
+
+assesment 1
+pull any image from docker
+run the image
+login to that image
+make changes
+commit those changes
+push that img to accound
+
+followed the above steps and give image name: kokilarg123/testkimage1
+port number in use
+stop docker stop containerid
+ps 
+dokcer rm id //to command to remove the c
+
+
+
+------above steps are for public repo========
+
+private:
+only authorized person can pull
+you have stored the image on docker hub
+store thers images on acr in azure
+ecr in aws
+
+iam-- role base
+networking rules
+
+they take the base image from docker hub
+modify that images with application code and
+they push these customized images to ecr
+
+they keep some images on the ecr
+u can pull it from the ecr
+modify image
+push it back to the ecr
+
+
+to push and pull from private acr
+command will be same but small changes
+ 
+docker pull ecrname/jatinnginx
+docker images
+docker run -it -d -p 80:80 ecrname/jatinnginx
+localhost
+
+assesment_2:
+create the ecr in aws account using terraForm code or account
+then authenticate ur command prompt with aws config
+command : aws configure 
+then follow steps mentions in view push command
+first command , name ref also u can take from there
+
+docker images
+which ever image u are will to push in the ecr for that
+image rename
+
+docker tag old image ecrname
+(full name based on view command push steps in aws kokilaecr)/newimage
+docker images
+docker push ecrname/newimage
+go back to aws ecr image
+ 
+ example:
+ cmd prompt
+ aws configure   
+ aws ecr get-login-password --region us-west-1 | docker login --username AWS --password-stdin 590184072145.dkr.ecr.us-west-1.amazonaws.com
+ docker tag testing 590184072145.dkr.ecr.us-west-1.amazonaws.com/kokilaecr:latest
+ docker push 590184072145.dkr.ecr.us-west-1.amazonaws.com/kokilaecr:latest
+
+
+
+---------------------------
+app code
+sprint 1
+v1 u hvae creates this image
+jatin:v1
+jathin:v2 user wher facing the issue roll it back.
+
+to do the version
+docker tag testing abc:<tag verion>
+ex:
+
+docker pull mysql:8.0-debian (it fetches the image of this tag)
+docker images
+then same if no tag used thn it will get latest version
+
+
+docker file:
+currently:
+docker pull
+docker run
+docker execute
+docker push
+separatly,
+DF is used to build your images, no sytanx, just need
+to write the commands
+example:
+from docker file:
+add this simple commands: 
+FROM(inbuild command) nginx:alpine //from ecr will put complete prefixtheusernameex/image/itsversion
+WORKDIR (this will tell from which directory or particular directory) /home/kokila
+run(its a command in df which test to run the nginx) rm -rf /usr/share/nginx/html/*
+copy index.html /usr/share/nginx/html/index.html
+ADD 
+USER //to run the commands with specific user
+EXPOSE(for port number) 80
+--------------------important for interview-------------
+on the container i want to give the command to run it we use this:
+CMD ["executable"] 
+example
+CMD ["systemctl restart nginx service"] //default comand, this will override the
+default command
+
+ENTRYPOINT ["executable"] // some comand need to run manually ,but here it wont allow u 
+to override 
+---------------------------------
+sample: file name: dockerfile no extentions
+go to the location using cd
+FROM nginx:alpine 
+run rm -rf /usr/share/nginx/html/*
+copy index.html /usr/share/nginx/html/index.html
+EXPOSE 80
+we are telling to copy the connet so we are creating
+index.html file in same directory
+
+to execute above file run
+docker build -t firsttest .(dot means which directory dockerfile present)
+docker images
+
+docker run -it -d -p 80:80 firsttest //command to run the image in local
+
+if any modification:
+then again run build command with tag version
+docker build -t firsttest:v1 .
+stop the existing port 
+docker stop(smooth)/kill(forcefully) containerid
+docker run -it -d -p 80:80 firsttest:v1
+
+
+
+
+3: volumes:
+pull the images
+run the images ===> image became container
+modify the container
+Exit
+
+till the container is there changes will be there
+if u commit then the changes will be inside new image
+if not it will be lost 
+
+if the container hosted a website
+logs will be created it can be called a live log.
+
+think ur hosting it in laptop, if something happens to 
+laptop, it will be delete the container also
+
+to slove this , will create a volumes>
+it is type of directory
+where u will keep all the content running 
+inside the container.
+
+types of volumes
+1: bind mounts: mapping the drive which is outside the laptop or dockerfile
+2: named volumes: like docker tool which u have installed will als have its own directory
+inside that directory u can kwwp backup/volumes/data 
+in case of names volumes we define what will be the name of the volumne
+3: anonymous volume : same as above but it automatically generate the name of volume randomly
+
+
+delete the docker image:
+1: in docker Desktop select and delete manually
+2: docker rmi <image name>
+
+
+example:
+docker run -it -d nginx
+
+docker exec -it id(above comand will gve id) bash
+ls
+docker ps
+docker kill id
+docker rm id
+docker ps > container not there so folder gone
+
+kill the running docker
+
+docker volume create Demo 
+docker volume ls
+// it will confirm the creaion
+docker run -i -d -v demo:/home nginx
+// container is running with Demo
+//copy the id
+// if error then run the command docker logs id(above id)
+docher ps
+docker exec -it <container id> bash
+cd /home
+mkdir jatin
+ls
+Exit
+// the below command give complet config of the docker
+docker inspect
+
+
+docker kill id
+
+after delete the container
+rerun the image
+docker run -i -d -v demo:/home nginx
+docker exec -it <container id> bash
+
+
+
+
+
