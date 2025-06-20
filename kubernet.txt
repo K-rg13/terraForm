@@ -1,4 +1,5 @@
 kubernetes:
+https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
 
 1.is a open-sorce container orchestration software
 2.developed by google.
