@@ -1,5 +1,7 @@
 kubernetes:
 https://kubernetes.io/docs/concepts/workloads/controllers/deployment/
+code of jathins: https://github.com/jatinbhalla1991/demo2/tree/dev/docker
+
 
 1.is a open-sorce container orchestration software
 2.developed by google.
