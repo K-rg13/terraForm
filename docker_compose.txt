@@ -1,0 +1,48 @@
+docker compose file do?
+docker file helps to create imange
+docker compose helps to run the images
+
+first start the docker desktop app then do below
+
+create dcoker-compose.yml file.
+version: '3.8'  //its a docker compose version, will get the version in internet
+
+services:
+web:
+    image: nginx:alpine
+    ports:
+        - "8080:80"
+
+    volumns:
+        - "web
+
+
+to run: docker compose up. //get image and run and create container
+to stop: docker compose down. //stop the container
+to build: docker compose build
+to run a specific: docker compose -f docker-compose1.yml up
+if we have multiple docker compose files as example:
+then if we run the first command then it will
+run actual one.
+
+to push the changes in images: need to provide the dochub location ex: kokilarg123/<imagename>
+to do the above
+1: docker compose -f docker-compose1.yml build
+2: docker compose -f docker-compose1.yml push
+ex: docker-compose/compose1.yml
+
+MULTISTAGE DOCKER FILE:
+----------------------
+image:ubuntu
+u have any type of code, like java , python etc.
+similarly i got a fresh os image then
+u need to install some dependencies and set the custom confg
+ex: multistage-docker.yml
+
+
+image: this image u want to run thatjar package
+
+1 laptop where u r comying ur code , installing the dependencies and build the package
+50mb of ur space in laptop1
+
+2

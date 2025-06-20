@@ -1,0 +1,7 @@
+services:
+  app:
+    build: .
+    image: kokilarg123/firsttest1:v1
+    ports:
+      - "8080:80"
+

@@ -1,0 +1,172 @@
+kubernetes:
+
+1.is a open-sorce container orchestration software
+2.developed by google.
+3.relase on july 21,2015
+4.it is the ninth most active repositories on
+github in terms of number of commits
+
+feature:
+pods
+healthchecks:
+service management:
+
+docker swarm vs. kubernetes:
+if any container stopped in docker swarm, we have to manually start
+but in kubernetes it will happen automatically
+and soon ref recording
+
+its a self hosted method,
+on ur laptop also we can set the kubernetes env.
+vm on that machines u can set the kubernetes env.
+
+in azure: aks : azure kubernetes service
+in aws: eks :elastic kubernetes service
+
+here also we have master machines and slave machines
+master:
+configure done in master,
+it need: etcd(it stores the cluster infomartion to use it),
+api server(using api method we can call it like post ,get,soon),
+scheduler: we can schedule the jobs
+controller manager:node controller, replication,endpoints,service account
+docker:-
+slave:
+but apps run in slave
+kubelet: it takes specification from the api server
+kube-proxy: it is a proxy server, it handle the secuirity.
+different way to install it in different env.
+docker:
+
+
+ways to setup kubernetes:
+1: in docker desktop > setting >we have a option to setup kubernetes
+2:
+
+
+pods:
+its a small env, in slave node 
+it will get the memory from node(slave).
+
+kubernetes architecture:
+nodes>namespaces(multi)>pods(multi)>container(multi)
+
+k servies:
+
+in aws console:
+create eks using app or code(terraform)
+hilarious-metal-walrus-kokila
+subnet(error)>create vpcs>and create subnet> include 2 or 3 subnet and create
+EKS
+
+once this done open command prompt line:
+run :
+aws cluster
+aws configure
+multi line command:
+aws eks update-kubeconfig \
+  --region <your-region> \
+  --name <your-cluster-name>
+  single line command:
+ex: 
+aws eks update-kubeconfig --region <us-west-2> --name <hilarious-metal-walrus-kokila>
+aws eks update-kubeconfig --region us-west-2 --name my-eks-cluster-kokila
+
+kubectl get nodes
+
+other way to create and connect ESK cluster:
+goto: https://eksctl.io/installation/
+download: AMD64
+extract the zip to c: drive + env varible path.
+open:cmd
+aws configure:
+AKIAYS2NWIPIRBWQL3WG
+VPz+m+dL5Rx36DrOy9ArBgpQLeg/suqzY3CyHl3J
+then>
+run: 
+eksctl create cluster --name my-eks-cluster-kokila --region us-east-1 --nodegroup-name linux-nodes --node-type t3.medium  --nodes 2 --nodes-min 1 --nodes-max 3  --managed
+it will create the cluser in console
+then
+aws eks update-kubeconfig --region us-west-2 --name my-eks-cluster-kokila
+
+
+ kubectl config get-contexts ===>this will give culter detials
+ kubectl config use-context <context-name> ==>switching btw cluster authentication
+ ex: kubectl config use-context dev/qa ==>based on this it will set pointer to qa/dev cluster.
+
+ cheat sheet: kube commands
+ https://kubernetes.io/docs/reference/kubectl/quick-reference/
+
+ ~kubectl get pod
+ no pods
+ ~kubectl get namespaces
+ list the default setup
+
+ kubectl get pod -n kube-system
+
+ docker build -t <name>
+ docker run -it -d -p 80:80 firsttest:v1
+ docker push <dochub>/<filename>
+
+ go to cmd> kube driv> 
+ run command: kubectl apply -f deployment.yml
+
+then check in cmd prompt for running pods
+kubectl get pod
+kubectl get service
+
+
+used jathins custer:
+aws config:
+AKIAYFD5QYE6TLIWXPUS
+qNVzfRqhytPdnB6Lf01JYyNnfEsyVNL8wWNZrcRa
+
+aws eks update-kubeconfig --region us-east-1 --name my-eks-cluster
+
+ kubectl config get-contexts
+ kubectl config use-context clusterName(arn:aws:eks:us-east-1:560756474173:cluster/my-eks-cluster)
+ kubectl get pod
+ kubectl get namespaces
+kubectl get service
+create manifest or deployment file ref: kube folder>deployment.yml
+add the code
+open cmd prompt>navigate kube folder>
+run: kubectl apply -f deployment.yml
+kubectl get pod
+kubectl get service
+in service u will get the ip: copy it and paste in browser
+
+for above code: 
+there are 2 pods created to edit it we can 
+change in replica section of code
+else follow below set
+kubectl get deployment =>fetch the list if deployment
+kubectl edit deployment <pod name>:ex-my-node-app-k
+kubectl get pod
+//delete the resources from kube:
+some will do: kubectl delete pod <podname>
+this will remove and add automatically
+then
+
+kubectl delete deployment my-node-app-k
+azure:
+terraForm pipelines that in git hub actions
+terraForm code
+sql server
+aks
+acr
+
+i have creater the another pipeline this will deploy the code on the infra created by terraform code
+
+
+aws:
+terraForm pipelines github/jenkins/azure devops
+terraForm code
+sql server
+eks
+ecr --docker hub
+
+note:
+whatever cloud is using structure will be same only
+process or tools will be different
+

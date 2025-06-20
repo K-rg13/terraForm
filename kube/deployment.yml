@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-node-app-k
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: my-node-app-k
+  template:
+    metadata:
+      labels:
+        app: my-node-app-k
+    spec:
+      containers:
+        - name: app
+          image: kokilarg123/firsttest1:v1
+          ports:
+            - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-node-service-k
+spec:
+  type: LoadBalancer
+  selector:
+    app: my-node-app-k
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+ 
+#  manifest or deployment
+ 

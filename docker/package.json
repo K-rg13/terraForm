@@ -1,0 +1,13 @@
+{
+  "name": "task-manager",
+  "version": "1.0.0",
+  "description": "A simple task manager API using Node.js and Express",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "build": "echo \"No build step defined for plain Node.js\""
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
