@@ -80,8 +80,8 @@ download: AMD64
 extract the zip to c: drive + env varible path.
 open:cmd
 aws configure:
-AKIAYS2NWIPIRBWQL3WG
-VPz+m+dL5Rx36DrOy9ArBgpQLeg/suqzY3CyHl3J
+<AKIAYS2NWIPIRBWQL3WG>
+<VPz+m+dL5Rx36DrOy9ArBgpQLeg/suqzY3CyHl3J>
 then>
 run: 
 eksctl create cluster --name my-eks-cluster-kokila --region us-east-1 --nodegroup-name linux-nodes --node-type t3.medium  --nodes 2 --nodes-min 1 --nodes-max 3  --managed
@@ -118,8 +118,8 @@ kubectl get service
 
 used jathins custer:
 aws config:
-AKIAYFD5QYE6TLIWXPUS
-qNVzfRqhytPdnB6Lf01JYyNnfEsyVNL8wWNZrcRa
+<AKIAYFD5QYE6TLIWXPUS>
+<qNVzfRqhytPdnB6Lf01JYyNnfEsyVNL8wWNZrcRa>
 
 aws eks update-kubeconfig --region us-east-1 --name my-eks-cluster
 
