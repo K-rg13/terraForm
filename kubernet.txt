@@ -62,7 +62,7 @@ EKS
 once this done open command prompt line:
 run :
 aws cluster
-aws configure
+awsconfigure
 multi line command:
 aws eks update-kubeconfig \
   --region <your-region> \
@@ -70,7 +70,6 @@ aws eks update-kubeconfig \
   single line command:
 ex: 
 aws eks update-kubeconfig --region <us-west-2> --name <hilarious-metal-walrus-kokila>
-aws eks update-kubeconfig --region us-west-2 --name my-eks-cluster-kokila
 
 kubectl get nodes
 
@@ -79,15 +78,16 @@ goto: https://eksctl.io/installation/
 download: AMD64
 extract the zip to c: drive + env varible path.
 open:cmd
-aws configure:
-//<accessKEY>
-//<password>
+awsconfigure: space should be there after aws
+# Do this:
+AWS_ACCESS_KEY_ID=<REDACTED>
+AWS_SECRET_ACCESS_KEY=<REDACTED>
 then>
 run: 
-eksctl create cluster --name my-eks-cluster-kokila --region us-east-1 --nodegroup-name linux-nodes --node-type t3.medium  --nodes 2 --nodes-min 1 --nodes-max 3  --managed
+eksctl create cluster --name <clusterName> --region us-east-1 --nodegroup-name linux-nodes --node-type t3.medium  --nodes 2 --nodes-min 1 --nodes-max 3  --managed
 it will create the cluser in console
 then
-aws eks update-kubeconfig --region us-west-2 --name my-eks-cluster-kokila
+aws eks update-kubeconfig --region us-west-2 --name <clusterName>
 
 
  kubectl config get-contexts ===>this will give culter detials
@@ -117,14 +117,15 @@ kubectl get service
 
 
 used jathins custer:
-aws config:
-//<accessKEY>
-//<and pass>
+awsconfig:
+# Do this:
+AWS_ACCESS_KEY_ID=<REDACTED>
+AWS_SECRET_ACCESS_KEY=<REDACTED>
 
-aws eks update-kubeconfig --region us-east-1 --name my-eks-cluster
+aws eks update-kubeconfig --region us-east-1 --name <clusterName>
 
  kubectl config get-contexts
- kubectl config use-context clusterName(arn:aws:eks:us-east-1:560756474173:cluster/my-eks-cluster)
+ kubectl config use-context clusterName(path/my-eks-cluster)
  kubectl get pod
  kubectl get namespaces
 kubectl get service
